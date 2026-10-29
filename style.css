@@ -1,0 +1,962 @@
+/* ==========================================================================
+   秒秒云 (miaomiao-yun.autos) — Grand Prix Motorsport Telemetry & Aerodynamic Slipstream
+   Palette:
+   - Asphalt Anthracite: #101216
+   - Pit-Wall Slate: #181C24
+   - Carbon Chassis Border: #28303E
+   - Titanium Silver: #F1F5F9
+   - Telemetry Muted Silver: #94A3B8
+   - Racing Rosso Red: #E11D48
+   - Tachometer Yellow: #FACC15
+   ========================================================================== */
+
+:root {
+  --bg-asphalt: #101216;
+  --bg-pitwall: #181C24;
+  --bg-pitwall-elevated: #1F2430;
+  --border-chassis: #28303E;
+  --text-titanium: #F1F5F9;
+  --text-muted: #94A3B8;
+  --racing-red: #E11D48;
+  --racing-red-bright: #FB7185;
+  --tach-yellow: #FACC15;
+  --sector-purple: #C084FC;
+  --sector-green: #22C55E;
+  --max-width: 1200px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-asphalt);
+  color: var(--text-titanium);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-asphalt);
+  background-image:
+    linear-gradient(125deg, rgba(225, 29, 72, 0.06) 0%, transparent 38%),
+    linear-gradient(305deg, rgba(250, 204, 21, 0.04) 0%, transparent 35%),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 2px, transparent 2px, transparent 14px);
+  color: var(--text-titanium);
+  overflow-x: hidden;
+}
+
+/* Global Hyperlink Consistency (Rule: Prominent accent color, identical before & after visited) */
+a, a:visited {
+  color: var(--tach-yellow);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover, a:focus {
+  color: var(--racing-red-bright);
+  text-decoration: underline;
+}
+
+.article-body a,
+.article-body a:visited,
+.telemetry-card p a,
+.telemetry-card p a:visited,
+.faq-answer a,
+.faq-answer a:visited {
+  color: var(--tach-yellow);
+  font-weight: 600;
+  border-bottom: 1px dashed rgba(250, 204, 21, 0.55);
+  padding-bottom: 1px;
+}
+
+.article-body a:hover,
+.telemetry-card p a:hover {
+  color: #FFFFFF;
+  border-bottom-style: solid;
+  border-bottom-color: var(--racing-red);
+  text-decoration: none;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Kerb Stripe Top Bar */
+.kerb-stripe {
+  height: 5px;
+  width: 100%;
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--racing-red) 0px,
+    var(--racing-red) 24px,
+    var(--tach-yellow) 24px,
+    var(--tach-yellow) 48px,
+    #181C24 48px,
+    #181C24 60px
+  );
+}
+
+/* Header & Navigation */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(16, 18, 22, 0.94);
+  border-bottom: 1px solid var(--border-chassis);
+  backdrop-filter: blur(8px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand-logo, .brand-logo:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-titanium);
+  text-decoration: none;
+}
+
+.brand-logo:hover {
+  color: var(--tach-yellow);
+  text-decoration: none;
+}
+
+.brand-logo svg {
+  width: 46px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.brand-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-style: italic;
+  color: var(--text-titanium);
+  line-height: 1.1;
+}
+
+.brand-tag {
+  font-size: 0.7rem;
+  font-family: "Consolas", "Monaco", monospace;
+  color: var(--tach-yellow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.main-nav a,
+.main-nav a:visited {
+  color: var(--text-titanium);
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 4px;
+  background: rgba(24, 28, 36, 0.8);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--tach-yellow);
+  border-color: var(--racing-red);
+  background: rgba(225, 29, 72, 0.12);
+  text-decoration: none;
+}
+
+.main-nav a.nav-hub-pill,
+.main-nav a.nav-hub-pill:visited {
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.22), rgba(250, 204, 21, 0.15));
+  border: 1px solid var(--tach-yellow);
+  color: var(--tach-yellow);
+  font-weight: 700;
+}
+
+.main-nav a.nav-hub-pill:hover {
+  background: var(--tach-yellow);
+  color: #101216;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 64px 0 56px;
+  position: relative;
+  border-bottom: 1px solid var(--border-chassis);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(225, 29, 72, 0.14);
+  border-left: 4px solid var(--racing-red);
+  border-top: 1px solid rgba(225, 29, 72, 0.35);
+  border-right: 1px solid rgba(225, 29, 72, 0.35);
+  border-bottom: 1px solid rgba(225, 29, 72, 0.35);
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 0.82rem;
+  color: var(--tach-yellow);
+  margin-bottom: 18px;
+  letter-spacing: 0.05em;
+}
+
+.hero-content h1 {
+  font-size: clamp(2rem, 3.8vw, 3.05rem);
+  font-weight: 900;
+  line-height: 1.18;
+  margin-bottom: 20px;
+  color: var(--text-titanium);
+  letter-spacing: -0.01em;
+}
+
+.hero-content h1 .highlight-chrono {
+  color: var(--tach-yellow);
+  font-style: italic;
+}
+
+.hero-content h1 .highlight-red {
+  color: var(--racing-red-bright);
+}
+
+.hero-subtitle {
+  font-size: 1.08rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  max-width: 620px;
+}
+
+.sector-readout-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  padding: 14px 16px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+}
+
+.sector-metric {
+  border-left: 3px solid var(--racing-red);
+  padding-left: 10px;
+}
+
+.sector-metric:nth-child(2) {
+  border-left-color: var(--tach-yellow);
+}
+
+.sector-metric:nth-child(3) {
+  border-left-color: var(--sector-green);
+}
+
+.sector-label {
+  font-size: 0.72rem;
+  font-family: "Consolas", monospace;
+  color: var(--text-muted);
+  display: block;
+}
+
+.sector-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: "Consolas", monospace;
+  color: var(--text-titanium);
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn-primary-gp,
+.btn-primary-gp:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--racing-red) 0%, #BE123C 100%);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.04rem;
+  padding: 15px 30px;
+  border: 1px solid #FB7185;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  box-shadow: 0 8px 24px rgba(225, 29, 72, 0.35);
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.btn-primary-gp:hover {
+  background: linear-gradient(135deg, var(--tach-yellow) 0%, #EAB308 100%);
+  color: #101216;
+  border-color: var(--tach-yellow);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(250, 204, 21, 0.4);
+  text-decoration: none;
+}
+
+.btn-secondary-gp,
+.btn-secondary-gp:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--bg-pitwall-elevated);
+  color: var(--tach-yellow);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px 26px;
+  border: 1px solid var(--tach-yellow);
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.btn-secondary-gp:hover {
+  background: rgba(250, 204, 21, 0.16);
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.hero-visual-box {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  padding: 14px;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.hero-anim-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+}
+
+/* Section Scaffolding */
+.section-block {
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border-chassis);
+}
+
+.section-header {
+  margin-bottom: 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-kicker {
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--racing-red-bright);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-kicker::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  background: var(--tach-yellow);
+}
+
+.section-title {
+  font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+  font-weight: 900;
+  color: var(--text-titanium);
+  letter-spacing: 0.01em;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  max-width: 720px;
+  font-size: 1rem;
+}
+
+/* Telemetry Grid & Cards (4 cards) */
+.telemetry-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.telemetry-card {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  border-top: 3px solid var(--racing-red);
+  padding: 26px 22px;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.telemetry-card:nth-child(even) {
+  border-top-color: var(--tach-yellow);
+}
+
+.telemetry-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--tach-yellow);
+}
+
+.card-sector-tag {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-family: "Consolas", monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 2px 7px;
+  border: 1px solid var(--border-chassis);
+}
+
+.card-icon-wrap {
+  width: 48px;
+  height: 48px;
+  background: rgba(225, 29, 72, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.card-icon-wrap svg {
+  width: 28px;
+  height: 28px;
+}
+
+.telemetry-card h3 {
+  font-size: 1.18rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--text-titanium);
+}
+
+.telemetry-card p {
+  font-size: 0.93rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* Pricing Podium 3-Tier Grid */
+.podium-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  align-items: stretch;
+}
+
+.podium-card {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+}
+
+.podium-card.pole-position {
+  background: linear-gradient(180deg, #221A24 0%, var(--bg-pitwall) 100%);
+  border: 2px solid var(--tach-yellow);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(225, 29, 72, 0.22);
+}
+
+.pole-ribbon {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--tach-yellow);
+  color: #101216;
+  font-size: 0.75rem;
+  font-weight: 900;
+  font-family: "Consolas", monospace;
+  padding: 3px 10px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.tier-name {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-titanium);
+  margin-bottom: 6px;
+}
+
+.tier-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.tier-price {
+  font-size: 2.3rem;
+  font-weight: 900;
+  font-family: "Consolas", monospace;
+  color: var(--tach-yellow);
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border-chassis);
+  padding-bottom: 16px;
+}
+
+.tier-price span {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.spec-list {
+  list-style: none;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spec-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.94rem;
+  color: var(--text-titanium);
+}
+
+.spec-list li svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* FAQ Section */
+.faq-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.faq-item {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  border-left: 4px solid var(--racing-red);
+  padding: 24px 26px;
+}
+
+.faq-item:nth-child(2) {
+  border-left-color: var(--tach-yellow);
+}
+
+.faq-question {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-titanium);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-q-tag {
+  font-family: "Consolas", monospace;
+  font-size: 0.8rem;
+  background: rgba(225, 29, 72, 0.2);
+  color: var(--tach-yellow);
+  padding: 2px 8px;
+  border: 1px solid var(--racing-red);
+}
+
+.faq-answer {
+  color: var(--text-muted);
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+/* Testimonials (4 Items) */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.review-card {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  padding: 26px;
+  position: relative;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border-chassis);
+}
+
+.driver-name {
+  font-weight: 800;
+  color: var(--text-titanium);
+  font-size: 1.02rem;
+}
+
+.driver-role {
+  font-size: 0.8rem;
+  color: var(--tach-yellow);
+  font-family: "Consolas", monospace;
+}
+
+.review-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* Hub Page & Article Cards */
+.hub-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.article-card {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  border-top: 3px solid var(--racing-red);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.article-card:nth-child(even) {
+  border-top-color: var(--tach-yellow);
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--tach-yellow);
+}
+
+.article-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Consolas", monospace;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.sector-pill {
+  background: rgba(225, 29, 72, 0.18);
+  color: var(--tach-yellow);
+  padding: 2px 9px;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  font-weight: 700;
+}
+
+.article-card h2,
+.article-card h3 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.article-card h2 a,
+.article-card h2 a:visited,
+.article-card h3 a,
+.article-card h3 a:visited {
+  color: var(--text-titanium);
+  text-decoration: none;
+}
+
+.article-card h2 a:hover,
+.article-card h3 a:hover {
+  color: var(--tach-yellow);
+}
+
+.article-card p {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  margin-bottom: 18px;
+}
+
+.read-more-link,
+.read-more-link:visited {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tach-yellow);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Single Article Page Layout */
+.article-main {
+  padding: 56px 0;
+}
+
+.article-container {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  padding: 44px 40px;
+}
+
+.breadcrumb-nav {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  font-family: "Consolas", monospace;
+}
+
+.article-header {
+  border-bottom: 1px solid var(--border-chassis);
+  padding-bottom: 24px;
+  margin-bottom: 30px;
+}
+
+.article-header h1 {
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--text-titanium);
+  margin-bottom: 14px;
+}
+
+.article-byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  font-family: "Consolas", monospace;
+}
+
+.article-body h2 {
+  font-size: 1.42rem;
+  font-weight: 800;
+  color: var(--text-titanium);
+  margin: 34px 0 14px;
+  padding-left: 12px;
+  border-left: 4px solid var(--racing-red);
+}
+
+.article-body h3 {
+  font-size: 1.16rem;
+  font-weight: 700;
+  color: var(--tach-yellow);
+  margin: 24px 0 10px;
+}
+
+.article-body p {
+  font-size: 1.02rem;
+  color: #CBD5E1;
+  margin-bottom: 18px;
+  line-height: 1.8;
+}
+
+.article-body ul,
+.article-body ol {
+  margin: 0 0 20px 22px;
+  color: #CBD5E1;
+}
+
+.article-body li {
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+.telemetry-callout {
+  background: rgba(16, 18, 22, 0.75);
+  border: 1px solid var(--border-chassis);
+  border-left: 4px solid var(--tach-yellow);
+  padding: 20px 24px;
+  margin: 26px 0;
+}
+
+.article-cta-banner {
+  margin-top: 38px;
+  padding: 28px;
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.16), rgba(24, 28, 36, 0.95));
+  border: 1px solid var(--racing-red);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Sitemap List Styling */
+.sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.sitemap-box {
+  background: var(--bg-pitwall);
+  border: 1px solid var(--border-chassis);
+  padding: 26px;
+}
+
+.sitemap-box h2 {
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+  color: var(--tach-yellow);
+  border-bottom: 1px solid var(--border-chassis);
+  padding-bottom: 10px;
+}
+
+.sitemap-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Footer (Strict 4 Links Only) */
+.site-footer {
+  background: #0B0D10;
+  border-top: 2px solid var(--border-chassis);
+  padding: 36px 0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-copy {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-links a,
+.footer-links a:visited {
+  color: var(--tach-yellow);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--racing-red-bright);
+  text-decoration: underline;
+}
+
+/* Responsive Design & Rule 7 Mobile Navigation (Never display:none on nav) */
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .telemetry-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .podium-grid {
+    grid-template-columns: 1fr;
+  }
+  .podium-card.pole-position {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .main-nav {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .main-nav a,
+  .main-nav a:visited {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 9px 12px;
+    font-size: 0.86rem;
+    background: var(--bg-pitwall-elevated);
+    border: 1px solid var(--border-chassis);
+  }
+  .telemetry-grid-4,
+  .reviews-grid,
+  .hub-cards-grid,
+  .sitemap-grid {
+    grid-template-columns: 1fr;
+  }
+  .sector-readout-bar {
+    grid-template-columns: 1fr;
+  }
+  .article-container {
+    padding: 26px 20px;
+  }
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

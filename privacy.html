@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隐私政策 - 秒秒云零日志座舱级隐私保护声明</title>
+  <meta name="description" content="秒秒云严格执行零用户活动日志（Zero-Log）隐私政策，不记录浏览历史、DNS查询与传输载荷，采用无盘内存态节点守护您的数据主权。">
+  <link rel="canonical" href="https://miaomiao-yun.autos/privacy.html">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="kerb-stripe"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="秒秒云首页">
+        <svg viewBox="0 0 64 52" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="秒秒云赛道空气动力学与双秒表徽标">
+          <polygon points="4,38 22,10 58,10 46,22 26,22 16,38" fill="#E11D48"/>
+          <polygon points="18,44 30,26 60,26 52,36 34,36 28,44" fill="#FACC15"/>
+          <circle cx="44" cy="30" r="14" fill="#101216" stroke="#F1F5F9" stroke-width="2.2"/>
+          <line x1="44" y1="30" x2="44" y2="20" stroke="#E11D48" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="44" y1="30" x2="52" y2="30" stroke="#FACC15" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="44" cy="30" r="2.5" fill="#F1F5F9"/>
+        </svg>
+        <div class="brand-text-wrap">
+          <span class="brand-title">秒秒云</span>
+          <span class="brand-tag">CHRONO TELEMETRY .AUTOS</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="主导航">
+        <a href="index.html#advantages">赛道性能</a>
+        <a href="index.html#media-ai">视界与AI</a>
+        <a href="index.html#pricing">发车格套餐</a>
+        <a href="index.html#faq">技术官答疑</a>
+        <a href="velocity-dispatch.html" class="nav-hub-pill">极速情报站</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article-main">
+    <div class="container">
+      <div class="article-container">
+        <div class="article-header">
+          <span class="section-kicker">PRIVACY POLICY // ZERO-LOG ARCHITECTURE</span>
+          <h1>秒秒云隐私政策：零日志承诺与端到端加密规范</h1>
+        </div>
+
+        <div class="article-body">
+          <h2>1. 核心承诺：严格执行零用户活动日志（Zero-Log Policy）</h2>
+          <p>
+            秒秒云将用户的数字隐私视为不可妥协的工程底线。我们在此明确且郑重声明：<strong>秒秒云实行严格的零活动日志政策，绝不监控、不记录、不存储、也不向任何第三方出售或披露用户的网络浏览历史、目标访问URL、DNS解析查询记录、源IP地址映射关系以及加密隧道内的任何通信载荷内容。</strong>
+          </p>
+
+          <h2>2. 无盘内存态（RAM-Only）节点运行架构</h2>
+          <p>
+            为了从物理与系统底层彻底杜绝日志留存风险，秒秒云部署在全球各地的边缘转发服务器与落地节点均采用定制化无盘内存系统（RAM-Disk Architecture）：
+          </p>
+          <ul>
+            <li>所有协议转发进程均在易失性随机存取存储器（RAM）中直接运行，服务器本地不挂载任何用于写入连接日志的持久化机械硬盘或固态硬盘分区。</li>
+            <li>系统内核层已将 <code>/var/log</code> 等标准系统日志重定向至 <code>/dev/null</code> 空设备，一旦服务器重启或断电，内存中的全部瞬时状态即刻物理清零。</li>
+          </ul>
+
+          <h2>3. 最小化账户计量数据说明</h2>
+          <p>
+            为完成基本的订阅授权验证与月度流量配额统计，控制面板数据库仅保存以下最小化必要字段：
+          </p>
+          <ul>
+            <li><strong>注册凭据：</strong>您注册时填写的电子邮箱地址（支持使用匿名邮箱别名注册）及经由高强度 Argon2id 哈希加盐处理后的密码摘要。</li>
+            <li><strong>流量字节汇总：</strong>系统仅按周期累加账户消耗的上下行总字节数（例如“已用 12.4 GB”），以便在用户仪表盘展示剩余配额，绝不记录这些流量具体流向了哪个网站或应用。</li>
+          </ul>
+
+          <h2>4. 支付匿名性与数据删除权</h2>
+          <p>
+            我们的账单结算通过合规的第三方加密支付网关完成，秒秒云不接触、不存储您的银行卡号或个人身份信息。您随时有权在控制面板申请永久注销账户，注销指令执行后，与该邮箱关联的计量数据将在数据库中被不可逆抹除。
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 秒秒云 · 赛道级IEPL全球网络加速引擎</div>
+      <nav class="footer-links" aria-label="页脚合规导航">
+        <a href="sitemap.html">网站地图</a>
+        <a href="about.html">关于我们</a>
+        <a href="terms.html">服务条款</a>
+        <a href="privacy.html">隐私政策</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
